@@ -8,7 +8,7 @@ function MissionCard() {
         <h2 className="text-3xl font-bold">Weekly Mission</h2>
   
         <p className="mt-4 text-neutral-600">
-          오늘의 미션을 확인하고 작업을 완료해보세요.
+          오늘의 미션을 확인하고 팀 과제를 완료해보세요.
         </p>
       </section>
     );
