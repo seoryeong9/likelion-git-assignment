@@ -5,7 +5,7 @@ function MissionCard() {
           WEEKLY MISSION
         </p>
   
-        <h2 className="text-3xl font-bold">Weekly Mission</h2>
+        <h2 className="text-3xl font-bold">Frontend Mission</h2>
   
         <p className="mt-4 text-neutral-600">
           오늘의 미션을 확인하고 작업을 완료해보세요.
