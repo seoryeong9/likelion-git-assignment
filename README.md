@@ -13,6 +13,20 @@ Git 심화 강의에서 배운 내용을 실제 협업 상황을 통해 연습�
 
 # 0. 시작하기
 
+## 실행 환경
+
+이 프로젝트는 다음 Node.js 버전을 지원합니다.
+
+```
+^20.19.0 || ^22.13.0 || >=24.0.0
+```
+
+원활한 진행을 위해 Node.js 24 사용을 권장합니다.
+
+```bash
+node --version
+```
+
 ## 1. Repository Fork
 
 이 Repository를 자신의 GitHub 계정으로 Fork합니다.
@@ -123,6 +137,9 @@ Frontend Git Mission
 ```bash
 git status
 ```
+
+충돌을 해결한 뒤에는 스테이징과 커밋까지 해야 Merge Commit이 만들어집니다.
+무엇을 해야 하는지는 `git status` 출력이 안내해 줍니다.
 
 완료 후 Git Graph를 확인합니다.
 
@@ -405,8 +422,9 @@ Merge 순서는 상관없습니다.
 각 Mission을 지시대로 수행했다면 이 단계에서는 Conflict가 발생하지 않습니다.
 만약 Conflict가 발생했다면 앞선 Mission 중 무언가를 잘못한 것이므로, 해당 Mission을 다시 확인하세요.
 
-**`rebase`를 사용하면 안 됩니다.**
-Mission 1의 Merge Commit과 Mission 4의 Revert 기록이 사라져서 과제를 수행한 근거가 없어집니다.
+**통합 단계에서는 `rebase`를 사용하면 안 됩니다.**
+기본 rebase는 Mission 1의 Merge Commit을 보존하지 않으므로, 충돌을 해결해 두 브랜치를 병합했다는 이력이 사라집니다.
+과제에서 요구하는 병합 구조를 유지하려면 반드시 `merge`를 사용하세요.
 
 ## 확인
 
@@ -419,7 +437,7 @@ git log --oneline --graph --decorate
 | Mission | 그래프에서 확인할 내용 |
 | --- | --- |
 | Conflict | 부모가 2개인 Merge Commit |
-| Cherry-pick | `feat: add attendance button` 커밋이 **원본과 다른 해시**로 존재 |
+| Cherry-pick | Mission 2에서 **새 해시로 생성한** `feat: add attendance button` 커밋이 포함되어 있음 |
 | Reset | `feat: update Git session subtitle` 커밋 **1개**만 존재 |
 | Revert | `feat: modify notice`와 이를 취소하는 `Revert` 커밋이 **둘 다** 존재 |
 
@@ -443,7 +461,7 @@ npm run dev
 
 # 3. 과제 기록
 
-`submit/final` 브랜치에 `ASSIGNMENT.md` 파일을 만들어 각 Mission에서 사용한 핵심 명령어와 이유를 작성합니다.
+`submit/final` 브랜치에서 `ASSIGNMENT.md` 파일을 열어 각 Mission에서 사용한 핵심 명령어와 이유를 작성합니다.
 
 저장소 루트에 템플릿이 있으니 그대로 채우면 됩니다.
 
