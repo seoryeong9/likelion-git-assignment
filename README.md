@@ -20,7 +20,8 @@ Git 심화 강의에서 배운 내용을 실제 협업 상황을 통해 연습�
 ## 2. Fork한 Repository Clone
 
 ```bash
-git clone https://github.com/0xwb7/likelion-git-assignment.git
+git clone https://github.com/YOUR_GITHUB_ID/likelion-git-assignment.git
+
 cd likelion-git-assignment
 ```
 
@@ -69,6 +70,12 @@ submit/reset
 submit/revert
 ```
 
+4개 Mission을 모두 마친 뒤에는 이 브랜치들을 하나로 합친 통합 브랜치를 만들어 Pull Request 1개로 제출합니다.
+
+```
+submit/final
+```
+
 ---
 
 # Mission 1. Conflict 해결
@@ -100,6 +107,10 @@ git switch -c submit/conflict upstream/mission/conflict/base
 ## 요구사항
 
 `mission/conflict/incoming`의 변경사항을 현재 브랜치에 Merge하세요.
+
+```bash
+git merge upstream/mission/conflict/incoming
+```
 
 Conflict를 직접 해결한 뒤 최종 제목을 다음과 같이 만드세요.
 
@@ -370,9 +381,71 @@ git push -u origin submit/revert
 
 ---
 
-# 2. 과제 기록
+# 2. 통합 브랜치 만들기
 
-Repository의 `ASSIGNMENT.md`에 각 Mission에서 사용한 핵심 명령어와 이유를 작성합니다.
+4개 Mission을 모두 마쳤다면, 제출은 Pull Request **1개**로 합니다.
+
+먼저 4개 브랜치를 하나로 합칠 `submit/final` 브랜치를 만듭니다.
+
+```bash
+git switch -c submit/final main
+```
+
+여기에 4개 Mission 브랜치를 차례로 Merge합니다.
+
+```bash
+git merge submit/conflict
+git merge submit/cherry
+git merge submit/reset
+git merge submit/revert
+```
+
+Merge 순서는 상관없습니다.
+
+각 Mission을 지시대로 수행했다면 이 단계에서는 Conflict가 발생하지 않습니다.
+만약 Conflict가 발생했다면 앞선 Mission 중 무언가를 잘못한 것이므로, 해당 Mission을 다시 확인하세요.
+
+**`rebase`를 사용하면 안 됩니다.**
+Mission 1의 Merge Commit과 Mission 4의 Revert 기록이 사라져서 과제를 수행한 근거가 없어집니다.
+
+## 확인
+
+```bash
+git log --oneline --graph --decorate
+```
+
+그래프에 다음 4가지가 모두 보여야 합니다.
+
+| Mission | 그래프에서 확인할 내용 |
+| --- | --- |
+| Conflict | 부모가 2개인 Merge Commit |
+| Cherry-pick | `feat: add attendance button` 커밋이 **원본과 다른 해시**로 존재 |
+| Reset | `feat: update Git session subtitle` 커밋 **1개**만 존재 |
+| Revert | `feat: modify notice`와 이를 취소하는 `Revert` 커밋이 **둘 다** 존재 |
+
+최종 화면 상태도 함께 확인합니다.
+
+```bash
+npm install
+npm run dev
+```
+
+| 위치 | 최종 값 |
+| --- | --- |
+| Header 제목 | `LIKELION Git Lab` |
+| Header 부제 | `Git Advanced Session` |
+| Header 버튼 | `출석 체크` |
+| Notice | `멋사 프론트 화이팅` |
+| Mission 제목 | `Frontend Git Mission` |
+| Footer | `LIKELION Git Assignment` |
+
+---
+
+# 3. 과제 기록
+
+`submit/final` 브랜치에 `ASSIGNMENT.md` 파일을 만들어 각 Mission에서 사용한 핵심 명령어와 이유를 작성합니다.
+
+저장소 루트에 템플릿이 있으니 그대로 채우면 됩니다.
 
 ```markdown
 ## Mission 1 - Conflict
@@ -408,17 +481,61 @@ Repository의 `ASSIGNMENT.md`에 각 Mission에서 사용한 핵심 명령어와
 
 각 Mission마다 1~3문장 정도면 충분합니다.
 
+작성 후 커밋합니다.
+
+```bash
+git add ASSIGNMENT.md
+git commit -m "docs: write assignment record"
+```
+
 ---
 
-# 3. 최종 제출
+# 4. 최종 제출
 
-자신의 Fork Repository에 다음 브랜치가 모두 Push되어 있어야 합니다.
+## 1. 브랜치 Push
 
-| Mission | 제출 브랜치 |
+Mission별 브랜치 4개와 통합 브랜치를 모두 자신의 Fork에 Push합니다.
+
+```bash
+git push -u origin submit/conflict
+git push -u origin submit/cherry
+git push -u origin submit/reset
+git push -u origin submit/revert
+git push -u origin submit/final
+```
+
+## 2. Pull Request 생성
+
+자신의 Fork에서 원본 Repository로 Pull Request **1개**를 생성합니다.
+
+| 항목 | 값 |
 | --- | --- |
-| Conflict | `submit/conflict` |
-| Cherry-pick | `submit/cherry` |
-| Reset | `submit/reset` |
-| Revert | `submit/revert` |
+| base repository | `0xwb7/likelion-git-assignment` |
+| base branch | `main` |
+| head repository | `YOUR_GITHUB_ID/likelion-git-assignment` |
+| compare branch | `submit/final` |
 
-최종적으로 자신의 GitHub Repository 링크를 제출합니다.
+base branch를 `main`이 아닌 `mission/*` 브랜치로 잘못 지정하지 않도록 주의하세요.
+
+## 3. PR 본문
+
+```markdown
+## 제출 브랜치
+- Conflict: submit/conflict
+- Cherry-pick: submit/cherry
+- Reset: submit/reset
+- Revert: submit/revert
+
+## 과제 기록
+ASSIGNMENT.md 참고
+
+## 어려웠던 점
+...
+```
+
+## 체크리스트
+
+- [ ] `submit/final`에 4개 Mission이 모두 Merge되어 있다
+- [ ] `ASSIGNMENT.md`를 작성했다
+- [ ] Pull Request의 base branch가 `main`이다
+- [ ] `git log --graph`에서 Merge / Cherry-pick / Reset / Revert 기록이 모두 확인된다
