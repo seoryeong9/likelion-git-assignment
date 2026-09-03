@@ -20,7 +20,7 @@ Git 심화 강의에서 배운 내용을 실제 협업 상황을 통해 연습�
 ## 2. Fork한 Repository Clone
 
 ```bash
-git clone <https://github.com/><YOUR_GITHUB_ID>/likelion-git-assignment.git
+git clone https://github.com/0xwb7/likelion-git-assignment.git
 cd likelion-git-assignment
 ```
 
