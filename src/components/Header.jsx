@@ -10,7 +10,7 @@ function Header() {
           </h1>
 
           <span className="text-sm text-neutral-400">
-            Git Practice
+            Git Advanced Session
           </span>
         </div>
 
